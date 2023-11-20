@@ -34,7 +34,7 @@ const createProduct =async(req,res)=>{
         }) 
     }
 }
-const editProduct =async(req,res)=>{
+const deleteProduct =async(req,res)=>{
     try {
         const inventeryId = req.params.id
         if(inventeryId)
@@ -48,10 +48,10 @@ const editProduct =async(req,res)=>{
             inventery.stock = stock
            
 
-            await inventery.save()
+            await inventery.deleteOne()
 
             res.status(200).send({
-                message:"inventery Edited Successfully"
+                message:"inventery Delete Successfully"
             })
         }
         else
@@ -65,7 +65,38 @@ const editProduct =async(req,res)=>{
         })  
     }
     }
-
+    const editProduct =async(req,res)=>{
+        try {
+            const inventeryId = req.params.id
+            if(inventeryId)
+            {
+                const {title,imageUrl,category,price,stock} = req.body
+                let inventery = await ProductModel.findById(inventeryId)
+                inventery.title = title,
+                inventery.imageUrl = imageUrl,
+                inventery.category = category,
+                inventery.price = price,
+                inventery.stock = stock
+               
+    
+                await inventery.save()
+    
+                res.status(200).send({
+                    message:"inventery Edited Successfully"
+                })
+            }
+            else
+            {
+                res.status(400).send({message:"inventery Id Not found"})
+            }     
+        } catch (error) {
+            res.status(500).send({
+                message:"Internal Server Error",
+                error:error.message
+            })  
+        }
+        }
+    
 const getAllProduct =async(req,res)=>{
     try {
        let inventery= await ProductModel.find({}) 
@@ -119,5 +150,6 @@ export default{
     editProduct, 
     getAllProduct,
     getProductbyId,
-    updateStatus
+    updateStatus,
+    deleteProduct
 }
