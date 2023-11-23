@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     email:{type:String,required:[true,"Email is required"],validate:validateEmail},
     password:{type:String,required:[true,"Password is required"]},
     status:{type:Boolean,default:true},
-    role:{type:String,default:'user'},
+    role:{type:String,default:'customer'},
     createdAt:{type:Date, default:Date.now()}
 },{
     collection:'users',

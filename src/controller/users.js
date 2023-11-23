@@ -64,8 +64,25 @@ const login = async(req,res)=>{
         })
     }
 }
+const getUsers = async(req,res)=>{
+    try {
+         let user = await userModel.find({},{password:0})
+         res.status(200).send({
+             message:"User Data Fetched Successfully",
+             user
+         })
+    } catch (error) {
+     
+         res.status(500).send({
+             message:"Internal Server Error",
+             error:error.message
+         })
+    }
+ }
+
 
 export default {
     create,
-    login
+    login,
+    getUsers
 }

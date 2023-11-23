@@ -15,7 +15,7 @@ const createProduct =async(req,res)=>{
             })
             
             res.status(201).send({
-                message:"Product Created, Sent for Approval"
+                message:"Product Created Successfully"
             })
         }
        else
@@ -39,16 +39,16 @@ const deleteProduct =async(req,res)=>{
         const inventeryId = req.params.id
         if(inventeryId)
         {
-            const {title,imageUrl,category,price,stock} = req.body
-            let inventery = await ProductModel.findById(inventeryId)
-            inventery.title = title,
-            inventery.imageUrl = imageUrl,
-            inventery.category = category,
-            inventery.price = price,
-            inventery.stock = stock
+            // const {title,imageUrl,category,price,stock} = req.body
+            // let inventery = await ProductModel.findById(inventeryId)
+            // inventery.title = title,
+            // inventery.imageUrl = imageUrl,
+            // inventery.category = category,
+            // inventery.price = price,
+            // inventery.stock = stock
            
 
-            await inventery.deleteOne()
+            await ProductModel.findByIdAndDelete(inventeryId)
 
             res.status(200).send({
                 message:"inventery Delete Successfully"
@@ -59,6 +59,7 @@ const deleteProduct =async(req,res)=>{
             res.status(400).send({message:"inventery Id Not found"})
         }     
     } catch (error) {
+        console.log(error)
         res.status(500).send({
             message:"Internal Server Error",
             error:error.message
@@ -90,6 +91,7 @@ const deleteProduct =async(req,res)=>{
                 res.status(400).send({message:"inventery Id Not found"})
             }     
         } catch (error) {
+            console.log(error)
             res.status(500).send({
                 message:"Internal Server Error",
                 error:error.message
